@@ -1,5 +1,11 @@
 # XNie Translate
 
+## 🌐 在线预览
+
+[https://fanyi.xiaonie.xyz/](https://fanyi.xiaonie.xyz/)
+
+![XNie Translate 界面展示](tu.png)
+
 一个功能强大的Web端实时翻译工具，支持多种语言互译，具备智能自动识别语言、历史记录管理、自动保存等功能。
 
 ## ✨ 功能特性
