@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "projectName": "xn-translate",
+  "build": {
+    "command": "npm run build",
+    "outputDir": "dist",
+    "nodeVersion": "16.x",
+    "envVars": [
+      {
+        "key": "VITE_API_KEY",
+        "value": "sk-YhO01bMADaRDFeym1f6aCcB750F3472c8dE9E16eE8236cFd",
+        "type": "secret"
+      },
+      {
+        "key": "VITE_API_URL",
+        "value": "https://free.v36.cm/v1/chat/completions",
+        "type": "public"
+      }
+    ]
+  },
+  "deploy": {
+    "autoDeploy": true,
+    "branch": "main",
+    "domains": [],
+    "https": {
+      "enabled": true,
+      "forceHttps": true
+    }
+  },
+  "cache": {
+    "rules": [
+      {
+        "pattern": "*.js",
+        "ttl": 31536000,
+        "ignoreQueryString": true
+      },
+      {
+        "pattern": "*.css",
+        "ttl": 31536000,
+        "ignoreQueryString": true
+      },
+      {
+        "pattern": "*.{png,jpg,jpeg,gif,webp,svg}",
+        "ttl": 31536000,
+        "ignoreQueryString": true
+      },
+      {
+        "pattern": "index.html",
+        "ttl": 0,
+        "ignoreQueryString": false
+      }
+    ]
+  },
+  "routing": {
+    "rules": [
+      {
+        "source": "/*",
+        "target": "/index.html",
+        "type": "rewrite"
+      }
+    ]
+  },
+  "security": {
+    "xssProtection": true,
+    "contentSecurityPolicy": "default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:;",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  }
+}
