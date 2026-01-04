@@ -42,8 +42,8 @@
           id="input"
           v-model="inputText"
           placeholder="请输入翻译文本"
-          @keydown.ctrl.enter="translate"
-          @keydown.meta.enter="translate"
+          @keydown.ctrl.enter="handleManualTranslate"
+          @keydown.meta.enter="handleManualTranslate"
           @keydown.esc="clearText"
           aria-label="输入要翻译的文本"
           aria-describedby="input-hint"
@@ -333,7 +333,24 @@ const customTranslate = async () => {
   
   const result = await translate(inputText.value, sourceLanguage.value, targetLanguage.value)
   if (result) {
-    // 保存到历史记录
+    // 保存到历史记录 - 只保存输入长度大于20字符或手动触发的翻译
+    // 防止频繁保存短文本翻译
+    if (inputText.value.length > 20) {
+      saveToHistory(inputText.value, result)
+    }
+  }
+}
+
+/**
+ * 手动触发翻译的处理函数
+ * 无论输入长度如何，都会保存到历史记录中
+ */
+const handleManualTranslate = async () => {
+  if (!inputText.value.trim()) return
+  
+  const result = await translate(inputText.value, sourceLanguage.value, targetLanguage.value)
+  if (result) {
+    // 手动触发的翻译总是保存到历史记录中
     saveToHistory(inputText.value, result)
   }
 }
@@ -351,7 +368,7 @@ const debouncedCustomTranslate = (() => {
     timeout = setTimeout(() => {
       customTranslate()
       timeout = null
-    }, 500)
+    }, 2000) // 增加防抖时间到2秒
   }
 })()
 
